@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+echo "repo:"
+read repo
+git clone $repo
+
 sudo su -
 sudo apt-get update
 sudo apt install default-jdk -y
