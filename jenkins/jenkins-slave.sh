@@ -1,10 +1,6 @@
 #!/bin/bash
 
 
-echo "repo:"
-read repo
-git clone $repo
-
 sudo su -
 pwd 
 cd /opt/
