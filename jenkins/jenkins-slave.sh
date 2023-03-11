@@ -2,6 +2,11 @@
 
 
 sudo su -
+
+sudo apt-get update -y 
+sudo apt install default-jdk -y
+java -version
+
 pwd 
 cd /opt/
 
