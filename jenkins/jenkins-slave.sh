@@ -4,6 +4,15 @@
 sudo su -
 pwd 
 cd /opt/
+
+if [ ! -d /opt/jenkins ]
+then
+     mkdir /opt/jenkins
+     echo "directory created"
+else
+     echo "Directory exists"
+fi
+
 mkdir jenkins
 chmod 755 jenkins
 cd jenkins
