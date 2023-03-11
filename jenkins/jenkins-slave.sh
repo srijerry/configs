@@ -1,47 +1,41 @@
-#!/bin/bash
+#! /bin/bash
+slave_config() {
 
-
-sudo su -
-
-sudo apt-get update -y 
+sudo apt-get update -y
 sudo apt install default-jdk -y
 java -version
-
-pwd 
-cd /opt/
 
 if [ ! -d /opt/jenkins ]
 then
      mkdir /opt/jenkins
+     chmod 755 /opt/jenkins
      echo "directory created"
 else
      echo "Directory exists"
 fi
 
-mkdir jenkins
-chmod 755 jenkins
-cd jenkins
 
-remote_root_dir=$pwd
-
-echo -e "\n\n\n" | ssh-keygen
+echo -e '\n' | ssh-keygen -N ""
 
 cd ~/.ssh/
 
-privatekey=$cat id_rsa
+privatekey=$(cat /root/.ssh/id_rsa)
 
-publicekey=$cat id_rsa.pub
+publicekey=$(cat /root/.ssh/id_rsa.pub)
 
-hostname=$hostname -i
+hostname=$(hostname -i)
 
-cat id_rsa >> authorized_keys
+cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
+
+cat /root/.ssh/authorized_keys
 
 
+echo "the private is : "$privatekey
 
-echo "$remote_root_dir"
+echo "the public is : "$publicekey
 
-echo "$privatekey"
+echo "Hostname : "$hostname
 
-echo "$publicekey"
+}
 
-echo "$hostname"
+slave_config
