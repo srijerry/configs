@@ -6,9 +6,6 @@ read repo
 git clone $repo
 
 sudo su -
-sudo apt-get update
-sudo apt install default-jdk -y
-java -version
 pwd 
 cd /opt/
 mkdir jenkins
