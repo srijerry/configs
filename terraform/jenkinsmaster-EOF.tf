@@ -13,15 +13,24 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Create key pair
-resource "aws_key_pair" "my_keypair" {
-  key_name   = "my_keypair"
-  public_key = file("my_keypair.pub")
+resource "aws_key_pair" "tf_key" {
+  key_name   = "tf_key"
+  public_key = tls_private_key.rsa.public_key_openssh
 }
 
-data "aws_key_pair" "my_keypair_data" {
-  key_name = aws_key_pair.my_keypair.key_name
+resource "tls_private_key" "rsa" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
 }
+
+resource "local_file" "tf_key" {
+  content  = tls_private_key.rsa.private_key_pem
+  filename = "tfkey"
+}
+
+/* data "aws_key_pair" "my_keypair_data" {
+  key_name = aws_key_pair.my_keypair.key_name
+} */
 
 # Create EC2 instance
 resource "aws_instance" "jenkins-master" {
@@ -70,7 +79,12 @@ resource "aws_instance" "jenkins-master" {
   }
 } */
 
-# Output key pair
+/* # Output key pair
 output "key_pair" {
   value = data.aws_key_pair.my_keypair_data.key_name
+} */
+
+output "instance_public_ip" {
+  description = "Public IP address of the EC2 instance"
+  value       = aws_instance.jenkins-master.public_ip
 }
